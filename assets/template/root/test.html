@@ -10,38 +10,12 @@
     var dataStore = new Ext.data.Store({
         model: 'Conversation',
         data:  [
+:           while $iter.next -> $d{
             {
-                id  : 1,
-                body: 'おい',
+                id: <: $d.id() :>,
+                body: '<: $d.body() :>',
             },
-            {
-                id  : 2,
-                body: 'こら',
-            },
-            {
-                id  : 3,
-                body: 'これは',
-            },
-            {
-                id  : 4,
-                body: 'テスト',
-            },
-            {
-                id  : 5,
-                body: 'です',
-            },
-            {
-                id  : 6,
-                body: 'おい',
-            },
-            {
-                id  : 7,
-                body: 'きいてんのか',
-            },
-            {
-                id  : 8,
-                body: 'おい',
-            },
+:           }
         ]
     });
 
