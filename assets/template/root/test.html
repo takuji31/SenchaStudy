@@ -1,0 +1,108 @@
+:cascade layout;
+:around header -> {
+<script type="text/javascript">
+    Ext.regModel('Conversation',{
+        fields: [
+            {name: 'id', type: 'int'},
+            {name: 'body', type: 'string'},
+        ]
+    });
+    var dataStore = new Ext.data.Store({
+        model: 'Conversation',
+        data:  [
+            {
+                id  : 1,
+                body: 'おい',
+            },
+            {
+                id  : 2,
+                body: 'こら',
+            },
+            {
+                id  : 3,
+                body: 'これは',
+            },
+            {
+                id  : 4,
+                body: 'テスト',
+            },
+            {
+                id  : 5,
+                body: 'です',
+            },
+            {
+                id  : 6,
+                body: 'おい',
+            },
+            {
+                id  : 7,
+                body: 'きいてんのか',
+            },
+            {
+                id  : 8,
+                body: 'おい',
+            },
+        ]
+    });
+
+    var dataIndex = 0;
+    Ext.ns('Senchan.ui.Novel');
+    Senchan.ui.Novel = Ext.extend(Ext.Panel,{
+        layout: {
+            type: 'vbox',
+            align: 'stretch',
+        },
+        initComponent : function () {
+            this.novelPanel = new Senchan.ui.NovelPanel({
+                id: 'novel',
+                styleHtmlContent: true,
+
+            });
+            this.charPanel = new Ext.Panel({
+                html: 'Character',
+                id: 'char',
+                styleHtmlContent: true,
+            });
+            this.novelPanel.flex = 1;
+            this.charPanel.flex = 1;
+            this.items = [this.charPanel,this.novelPanel];
+            Senchan.ui.Novel.superclass.initComponent.call(this);
+        },
+    });
+    Senchan.ui.NovelPanel = Ext.extend(Ext.Component,{
+        initComponent : function () {
+            var rec = dataStore.getAt(dataIndex);
+            this.update(rec.get('body'));
+            dataIndex++;
+            Senchan.ui.NovelPanel.superclass.initComponent.call(this);
+        },
+        afterRender: function() {
+            Senchan.ui.NovelPanel.superclass.afterRender.call(this);
+            this.mon(this.el,{
+                tap: function(obj,e){
+                    var text = dataStore.getAt(dataIndex);
+                    if(!text) {
+                        return;
+                    }
+                    this.update(text.get('body'));
+                    dataIndex++;
+                }
+            });
+        }
+    });
+
+    Ext.setup({
+        onReady: function(){
+            var panel = new Senchan.ui.Novel({
+                fullscreen: true,
+                defaults: {
+                    flex: 1,
+                },
+            }); 
+        },
+    });
+</script>
+:}
+:around content -> {
+:}
+

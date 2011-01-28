@@ -1,0 +1,8 @@
+var slides = [
+:    for $data.get_all() -> $d {
+    {
+        html: '<: $d :>',
+        cls:  'card card<: $~d.count :>',
+    },
+:}
+];
